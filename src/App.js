@@ -9,6 +9,8 @@ import PlayerTerminal from './PlayerTerminal';
 
 function App() {
 
+    //TestChange1
+
     const NumberOfMoves = 4;
 
     const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon")
