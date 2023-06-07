@@ -7,9 +7,8 @@ import PlayerTerminal from './PlayerTerminal';
 
 
 
-function App() {
-
-    //TestChange2
+function App() 
+{
 
     const NumberOfMoves = 4;
 

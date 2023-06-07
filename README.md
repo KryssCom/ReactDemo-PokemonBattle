@@ -1,5 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+
+## CC_NOTES
+This was initially based on a short React/API demo app from Web Dev Simplified.
+The notes below are currently unchanged from that starting point, and not written by me.
+
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
