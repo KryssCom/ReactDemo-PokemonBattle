@@ -36,7 +36,7 @@ export default function PokemonPlayer({ ActivatePokemonSelectionBtn, playerPokem
 
             <select value={value} onChange={handleChange}>
                 {pokemonOptions.map((option) => (
-                <option key={option.value} value={option.value}> {option.label} </option>
+                <option key={option.label} value={option.value}> {option.label} </option>
                 ))}
             </select>
 

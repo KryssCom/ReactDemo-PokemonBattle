@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect, useRef} from 'react';
 import PokemonDisplay from './PokemonDisplay'
 import PokemonSelection from './PokemonSelection'
-import ActionButton from './ActionButton';
+import ActionButtons from './ActionButtons';
 import PlayerTerminal from './PlayerTerminal';
 
 
@@ -16,12 +16,13 @@ function App()
     const [loadingApiData, setLoadingApiData] = useState(true)
     const [fullPokemonList, setFullPokemonList] = useState([]);
     const [playerTerminalMsg, setPlayerTerminalMsg] = useState("It's your turn!");
-    const [actionButtonText, setActionButtonText] = useState("ATTACK!");
+    const [attackBtnText, setAttackBtnText] = useState(["", "", "", ""]);
     const [playerPokemonSelected, setPlayerPokemonSelected] = useState(false);
 
 
     const [opponentPokemon, setOpponentPokemon] = useState();
     const [playerPokemon, setPlayerPokemon] = useState();
+    const [currentTurn, setCurrentTurn] = useState("neutral");
 
 
     const move = 
@@ -126,6 +127,27 @@ function App()
 
 
 
+    
+    useEffect(() => {
+
+        async function OpponentTurn()
+        {
+            console.log("OPPONENT NOW TAKING TURN");
+
+            //OPPONENT STUFF HERE
+
+            setCurrentTurn("player");
+            return;
+        }
+
+
+        if (currentTurn == "opponent");
+        {
+            OpponentTurn();
+        }
+
+        return; // () => cancel()
+    }, [currentTurn])
 
 
 
@@ -175,37 +197,82 @@ function App()
 
 
 
-    function ActivateActionButton() 
+    function ActivateAttackBtn(attackNumber) 
     {
-      setPlayerTerminalMsg("It's Super Effective!");
+        console.log("NOW IN ACTIVATE ATTACK BTN; NUM: " + attackNumber + " type:", typeof(attackNumber));
+
+        switch (attackNumber)
+        {
+            case 1:
+                setPlayerTerminalMsg("It's Super Effective! 1111");
+                break;
+            case 2:
+                setPlayerTerminalMsg("It's Super Effective! 2222");
+                break;
+            case 3:
+                setPlayerTerminalMsg("It's Super Effective! 3333");
+                break;
+            case 4:
+                setPlayerTerminalMsg("It's Super Effective! 4444");
+                break;
+            default: 
+                setPlayerTerminalMsg("ATTACK ERROR :( ");
+                break;
+        }
+
+
+
+
+
+        //look up the move
+        //look up the power
+        //subtract the power from opponent hp
+        //player msg feedback
+        //check for faint
+        //set opponent turn     a useEffect that waits for opponent turn true?
+
+
+       setCurrentTurn("opponent");
+
     }
+
+
+
+
+
+
+    function ActivateMoveRefreshBtn(attackNumber) 
+    {
+        setPlayerTerminalMsg("REFRESHING MOVES! ");
+    }
+
+
+
+
 
 
     function ActivatePokemonSelectionBtn(playerSelectedPokemon) 
     {
-      console.log("NOW IN POKEMON SELECT BTN; playerSelectedPokemon: ", playerSelectedPokemon);
+        console.log("NOW IN POKEMON SELECT BTN; playerSelectedPokemon: ", playerSelectedPokemon);
 
-      let selectedPokemon = {};
+        let selectedPokemon = {};
 
-      for (let i = 0; i < fullPokemonList.length; i++)
-      {
-          if (fullPokemonList[i].name == playerSelectedPokemon)
-          {
-              selectedPokemon = fullPokemonList[i];
-              break;
-          }
-      }
-
-
+        for (let i = 0; i < fullPokemonList.length; i++)
+        {
+            if (fullPokemonList[i].name == playerSelectedPokemon)
+            {
+                selectedPokemon = fullPokemonList[i];
+                break;
+            }
+        }
 
         RetrieveDataForSinglePokemon(selectedPokemon)
             .then(result => {
             setPlayerPokemon(result);
+            let tempMoveArray = [result.moves[0].moveName, result.moves[1].moveName, result.moves[2].moveName, result.moves[3].moveName];
+            setAttackBtnText([...tempMoveArray]);
             console.log("retrievedPlayerPokemon: ", result);
             })
-
-
-
 
         setPlayerPokemonSelected(true);
     }
@@ -248,7 +315,11 @@ function App()
             <PokemonDisplay displayedPokemon={playerPokemon} />
             <br />
             <br />
-            <ActionButton ActivateActionButton={ActivateActionButton} actionButtonText={actionButtonText} />
+            <ActionButtons 
+                    ActivateAttackBtn={ActivateAttackBtn}            //Pass the function for attacking
+                    ActivateMoveRefreshBtn={ActivateMoveRefreshBtn}  //Pass the function for move-refresh
+                    attackBtnText={attackBtnText}                    //Array of four strings, the names of the four attacks
+                    />
             <br />
             <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
             <br />
