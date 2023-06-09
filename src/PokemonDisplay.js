@@ -9,7 +9,7 @@ export default function PokemonDisplay({ displayedPokemon })
 
 
 
-    console.log("displayed pkmn: ", displayedPokemon.pokemonName);
+    //console.log("displayed pkmn: ", displayedPokemon.pokemonName);
 
 
 

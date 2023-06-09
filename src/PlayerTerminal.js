@@ -2,12 +2,11 @@ import React from 'react'
 
 export default function PlayerTerminal({ playerTerminalMsg })
 {
-    let NewStr = playerTerminalMsg;
-    console.log("player terminal msg rcvd: " + NewStr);
+    //console.log("player terminal msg rcvd: " + playerTerminalMsg);
 
-return (
-    <div>
-        [TO PLAYER]: {playerTerminalMsg}
-    </div>
-  )
+    return (
+        <div>
+            {playerTerminalMsg}
+        </div>
+    )
 }

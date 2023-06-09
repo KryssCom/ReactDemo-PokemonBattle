@@ -15,14 +15,20 @@ function App()
     const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon")
     const [loadingApiData, setLoadingApiData] = useState(true)
     const [fullPokemonList, setFullPokemonList] = useState([]);
-    const [playerTerminalMsg, setPlayerTerminalMsg] = useState("It's your turn!");
+    const [playerTerminalMsg, setPlayerTerminalMsg] = useState("");
     const [attackBtnText, setAttackBtnText] = useState(["", "", "", ""]);
     const [playerPokemonSelected, setPlayerPokemonSelected] = useState(false);
 
 
     const [opponentPokemon, setOpponentPokemon] = useState();
     const [playerPokemon, setPlayerPokemon] = useState();
-    const [currentTurn, setCurrentTurn] = useState("neutral");
+
+
+
+    const [currentTurn, setCurrentTurn] = useState("neutral");      //Options:  "neutral", "player", "opponent";  swap for Enum?
+    const opponentTurnInProgress = useRef(false);
+
+
 
 
     const move = 
@@ -33,7 +39,7 @@ function App()
     };
 
  
-    const [pokemon, setPokemon] = useState(
+    const pokemon =
     {
         pokemonName: "",
         typeOne: "",
@@ -42,7 +48,7 @@ function App()
         currentHP: 0,
         moves: [{}, {}, {}, {}]           //array of 4 moves, each move is an object
     
-    })
+    };
 
 
 
@@ -77,7 +83,6 @@ function App()
             let cancel;
             let nextPageToCall = currentPageUrl;
 
-
             //First, use the PokeAPI to generate a list of objects containing a name and a URL for each of the original 151 Pokemon
             while (fullPokemonList.length < 151)
             {
@@ -92,9 +97,7 @@ function App()
                 }
             }
 
-
             console.log("full pkmn list: ", fullPokemonList);
-
 
             let randomOpponentPokemon = fullPokemonList[Math.floor(Math.random() * fullPokemonList.length)];
 
@@ -104,19 +107,12 @@ function App()
                     console.log("retrievedOpponent: ", result);
                 })
 
-
-
             return;
         }
 
 
-
-
-
         setLoadingApiData(true);
-
         InitialPageLoad(RetrieveDataForSinglePokemon);
-
         setLoadingApiData(false);
 
         return; // () => cancel()
@@ -132,17 +128,56 @@ function App()
 
         async function OpponentTurn()
         {
-            console.log("OPPONENT NOW TAKING TURN");
+            console.log("OPPONENT NOW TAKING TURN; datetime: ", Date.now() );
 
-            //OPPONENT STUFF HERE
+            setPlayerTerminalMsg("It's your opponent's turn!");
 
+            await new Promise(r => setTimeout(r, 1000));
+
+
+            //ATTACK SELECTION AND RESOLUTION
+            //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+            let attackNumber = Math.floor(Math.random() * 4);
+
+            console.log("random attack: " + attackNumber);
+
+
+            console.log("Opponent Attack Chosen: " + opponentPokemon.moves[attackNumber].moveName);
+            let chosenMovePower = opponentPokemon.moves[attackNumber].movePower;
+            let playerPokemonRemainingHP = playerPokemon.currentHP;
+            playerPokemonRemainingHP = playerPokemonRemainingHP - chosenMovePower;
+
+            console.log("player remaining hp: " + playerPokemonRemainingHP + "   move pwr: " + chosenMovePower);
+
+            if (playerPokemonRemainingHP <= 0)
+            {
+                setCurrentTurn("neutral");
+                setPlayerTerminalMsg(playerPokemon.pokemonName + " fainted! You lose!");
+                return;
+            }
+            else
+            {
+                setPlayerPokemon( {...playerPokemon, currentHP: playerPokemonRemainingHP});
+            }
+
+            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+            
+            console.log("!!!!opponent remianing hp: " + opponentPokemon.currentHP);
+
+            setPlayerTerminalMsg("It's your turn!");
+            opponentTurnInProgress.current = false;
             setCurrentTurn("player");
             return;
         }
 
 
-        if (currentTurn == "opponent");
+
+
+        if ((currentTurn == "opponent") && (opponentTurnInProgress.current == false))
         {
+            opponentTurnInProgress.current = true;
             OpponentTurn();
         }
 
@@ -157,8 +192,6 @@ function App()
 
     async function RetrieveDataForSinglePokemon(pokemonArg)
     {
-        console.log("NOW IN RetrieveDataForSinglePokemon");
-
         const singlePokemonRequest = await axios.get(pokemonArg.url); //cancellation crap here
         let dataFromSingleRandomPokemon = (singlePokemonRequest.data);
 
@@ -196,44 +229,31 @@ function App()
 
 
 
-
+    //CC_NOTE: should this use a "ResolveAttack" function?
     function ActivateAttackBtn(attackNumber) 
     {
-        console.log("NOW IN ACTIVATE ATTACK BTN; NUM: " + attackNumber + " type:", typeof(attackNumber));
+        //Look up the move, look up that move's power, subtract that power from opponent's remaining HP
+        attackNumber--;
+        console.log("Attack Chosen: " + playerPokemon.moves[attackNumber].moveName);
+        let chosenMovePower = playerPokemon.moves[attackNumber].movePower;
+        let opponentPokemonRemainingHP = opponentPokemon.currentHP;
+        opponentPokemonRemainingHP = opponentPokemonRemainingHP - chosenMovePower;
 
-        switch (attackNumber)
+
+
+        //console.log("Opponent Remaining HP: " + opponentPokemonRemainingHP);
+
+
+        if (opponentPokemonRemainingHP <= 0)
         {
-            case 1:
-                setPlayerTerminalMsg("It's Super Effective! 1111");
-                break;
-            case 2:
-                setPlayerTerminalMsg("It's Super Effective! 2222");
-                break;
-            case 3:
-                setPlayerTerminalMsg("It's Super Effective! 3333");
-                break;
-            case 4:
-                setPlayerTerminalMsg("It's Super Effective! 4444");
-                break;
-            default: 
-                setPlayerTerminalMsg("ATTACK ERROR :( ");
-                break;
+            setCurrentTurn("neutral");
+            setPlayerTerminalMsg(opponentPokemon.pokemonName + " fainted! You win!");
         }
-
-
-
-
-
-        //look up the move
-        //look up the power
-        //subtract the power from opponent hp
-        //player msg feedback
-        //check for faint
-        //set opponent turn     a useEffect that waits for opponent turn true?
-
-
-       setCurrentTurn("opponent");
-
+        else
+        {
+            setOpponentPokemon( {...opponentPokemon, currentHP: opponentPokemonRemainingHP});
+            setCurrentTurn("opponent");
+        }
     }
 
 
@@ -275,6 +295,8 @@ function App()
             })
 
         setPlayerPokemonSelected(true);
+        setPlayerTerminalMsg("It's your turn!");
+        setCurrentTurn("player");
     }
 
 
@@ -321,9 +343,12 @@ function App()
                     attackBtnText={attackBtnText}                    //Array of four strings, the names of the four attacks
                     />
             <br />
+            <hr />
+            <hr />
             <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
             <br />
             <br />
+            <hr />
             <hr />
         </>
         );
