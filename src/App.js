@@ -22,7 +22,7 @@ function App()
 
     const [opponentPokemon, setOpponentPokemon] = useState();
     const [playerPokemon, setPlayerPokemon] = useState();
-
+    const [gameIsOver, setGameIsOver] = useState(false);
 
 
     const [currentTurn, setCurrentTurn] = useState("neutral");      //Options:  "neutral", "player", "opponent";  swap for Enum?
@@ -154,6 +154,7 @@ function App()
             {
                 setCurrentTurn("neutral");
                 setPlayerTerminalMsg(playerPokemon.pokemonName + " fainted! You lose!");
+                setGameIsOver(true);
                 return;
             }
             else
@@ -232,6 +233,8 @@ function App()
     //CC_NOTE: should this use a "ResolveAttack" function?
     function ActivateAttackBtn(attackNumber) 
     {
+        if (currentTurn == "opponent") return;
+
         //Look up the move, look up that move's power, subtract that power from opponent's remaining HP
         attackNumber--;
         console.log("Attack Chosen: " + playerPokemon.moves[attackNumber].moveName);
@@ -248,6 +251,7 @@ function App()
         {
             setCurrentTurn("neutral");
             setPlayerTerminalMsg(opponentPokemon.pokemonName + " fainted! You win!");
+            setGameIsOver(true);
         }
         else
         {
@@ -301,7 +305,10 @@ function App()
 
 
 
-
+    function RefreshPage() 
+    {
+        window.location.reload(false);
+    }
 
 
 
@@ -350,6 +357,7 @@ function App()
             <br />
             <hr />
             <hr />
+            {gameIsOver && <button onClick={RefreshPage}> Play Again! </button>}
         </>
         );
     }
