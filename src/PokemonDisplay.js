@@ -15,6 +15,7 @@ export default function PokemonDisplay({ displayedPokemon })
 
     return (
     <div>
+        <img src={displayedPokemon.sprite} /> <br />
         Pokemon:  {displayedPokemon.pokemonName} <br />
         HP:  {displayedPokemon.currentHP} / {displayedPokemon.maximumHP}
     </div>

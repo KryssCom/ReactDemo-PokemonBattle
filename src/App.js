@@ -152,6 +152,7 @@ function App()
 
             if (playerPokemonRemainingHP <= 0)
             {
+                setPlayerPokemon( {...playerPokemon, currentHP: 0});
                 setCurrentTurn("neutral");
                 setPlayerTerminalMsg(playerPokemon.pokemonName + " fainted! You lose!");
                 setGameIsOver(true);
@@ -216,6 +217,7 @@ function App()
             //typeTwo: dataFromSingleRandomPokemon.types[1].type.name,
             maximumHP: dataFromSingleRandomPokemon.base_experience,
             currentHP: dataFromSingleRandomPokemon.base_experience,
+            sprite: dataFromSingleRandomPokemon.sprites.front_default,
             moves: retrievedPokemonMoves
         }
 
@@ -249,6 +251,7 @@ function App()
 
         if (opponentPokemonRemainingHP <= 0)
         {
+            setOpponentPokemon( {...opponentPokemon, currentHP: 0});
             setCurrentTurn("neutral");
             setPlayerTerminalMsg(opponentPokemon.pokemonName + " fainted! You win!");
             setGameIsOver(true);
@@ -339,6 +342,9 @@ function App()
             <br />
             Opponent:
             <PokemonDisplay displayedPokemon={opponentPokemon} />
+            <br />
+            <br />
+            <br />
             <br />
             You:
             <PokemonDisplay displayedPokemon={playerPokemon} />
