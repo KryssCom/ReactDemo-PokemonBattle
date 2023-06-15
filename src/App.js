@@ -284,16 +284,13 @@ function App()
 
 
 
-
-
-    //asdfasdfasdf
     async function ResolveAttack(attackingPokemon, defendingPokemon, attackSelectionNum) 
     {
-        let chosenAttackPower = attackingPokemon.moves[attackSelectionNum].movePower / 2;       //asdfasdfasdf ROUND UP
+        let chosenAttackPower = attackingPokemon.moves[attackSelectionNum].movePower / 2; 
         let chosenAttackType = attackingPokemon.moves[attackSelectionNum].moveType;
         let weaknessConfirmed = false;
         let resistanceConfirmed = false;
-        console.log("atk power: " + chosenAttackPower);
+
         
 
 
@@ -311,8 +308,8 @@ function App()
         }
 
 
-
-
+        chosenAttackPower = Math.round(chosenAttackPower);
+        console.log("atk power (modified): " + chosenAttackPower);
 
         await PrintNewTerminalMsg(attackingPokemon.pokemonName.toUpperCase() + " used " + attackingPokemon.moves[attackSelectionNum].moveName.toUpperCase() + "!");
 
