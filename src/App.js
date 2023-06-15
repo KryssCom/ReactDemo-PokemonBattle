@@ -39,12 +39,14 @@ function App()
 
     class Pokemon
     {
-        constructor(name, url, typeOne, maxHP, curHP, sprite, moves)
+        constructor(name, url, typeOne, weaknesses, resistances, maxHP, curHP, sprite, moves)
         {
             this.pokemonName = name; 
             this.pokemonUrl = url;
             this.typeOne = typeOne;
             this.typeTwo = "";
+            this.weaknesses = weaknesses;
+            this.resistances = resistances
             this.maxHP = maxHP;
             this.curHP = curHP; 
             this.sprite = sprite;
@@ -183,6 +185,7 @@ function App()
         let dataFromSinglePokemon = (singlePokemonRequest.data);
         console.log("Raw Pokemon Data: ", dataFromSinglePokemon);
 
+        //Grabbing four random moves for this Pokemon
         let listOfPokemonMoveUrls = dataFromSinglePokemon.moves.map(m => m.move.url);
         let retrievedPokemonMoves = [{}, {}, {}, {}];
 
@@ -196,11 +199,38 @@ function App()
             retrievedPokemonMoves[i].movePower = dataFromThisRandomMove.power ?? 10;
         }
 
+
+        //Grabbing type data
+        let typeDataUrl = dataFromSinglePokemon.types[0].type.url;
+        let typeDataRequest = await axios.get(typeDataUrl) //cancellation crap here
+        let retrievedWeaknesses = [];
+        let retrievedResistances = [];
+        console.log("typeDataRequest: ", typeDataRequest.data.damage_relations);
+
+        for (let i = 0; i < typeDataRequest.data.damage_relations.double_damage_from.length; i++)
+        {
+            retrievedWeaknesses.push(typeDataRequest.data.damage_relations.double_damage_from[i].name)
+        }
+
+        for (let i = 0; i < typeDataRequest.data.damage_relations.half_damage_from.length; i++)
+        {
+            retrievedResistances.push(typeDataRequest.data.damage_relations.half_damage_from[i].name)
+        }
+
+        for (let i = 0; i < typeDataRequest.data.damage_relations.no_damage_from.length; i++)
+        {
+            retrievedResistances.push(typeDataRequest.data.damage_relations.no_damage_from[i].name)
+        }
+
+
+
         let retrievedPokemon = new Pokemon(
             dataFromSinglePokemon.name,
             pokemonArg.url,
             dataFromSinglePokemon.types[0].type.name,
             //dataFromSinglePokemon.types[1].type.name,
+            retrievedWeaknesses,
+            retrievedResistances,
             dataFromSinglePokemon.base_experience,
             dataFromSinglePokemon.base_experience,
             dataFromSinglePokemon.sprites.front_default,
@@ -260,9 +290,29 @@ function App()
     async function ResolveAttack(attackingPokemon, defendingPokemon, attackSelectionNum) 
     {
         let chosenAttackPower = attackingPokemon.moves[attackSelectionNum].movePower / 2;       //asdfasdfasdf ROUND UP
+        let chosenAttackType = attackingPokemon.moves[attackSelectionNum].moveType;
+        let weaknessConfirmed = false;
+        let resistanceConfirmed = false;
         console.log("atk power: " + chosenAttackPower);
         
-        //check for weakness and resistance, double or halve atk power
+
+
+
+        //Check for weakness and resistance, double or halve atk power
+        if (defendingPokemon.weaknesses.includes(chosenAttackType))
+        {
+            weaknessConfirmed = true;
+            chosenAttackPower = chosenAttackPower * 2;
+        }
+        else if (defendingPokemon.resistances.includes(chosenAttackType))
+        {
+            resistanceConfirmed = true;
+            chosenAttackPower = chosenAttackPower / 2;
+        }
+
+
+
+
 
         await PrintNewTerminalMsg(attackingPokemon.pokemonName.toUpperCase() + " used " + attackingPokemon.moves[attackSelectionNum].moveName.toUpperCase() + "!");
 
@@ -271,7 +321,10 @@ function App()
 
         if (defendingPokemonRemainingHP < 0) {defendingPokemonRemainingHP = 0;}
 
-        //if wk or rs found:              MSG: it's super effective / not very effective
+        if (weaknessConfirmed)
+            {await PrintNewTerminalMsg("It's super effective!");}
+        else if (resistanceConfirmed)
+            {await PrintNewTerminalMsg("It's not very effective...");}
 
 
         if (currentTurn == "opponent")
