@@ -205,7 +205,7 @@ function App()
         let typeDataRequest = await axios.get(typeDataUrl) //cancellation crap here
         let retrievedWeaknesses = [];
         let retrievedResistances = [];
-        console.log("typeDataRequest: ", typeDataRequest.data.damage_relations);
+        console.log("Raw Type Data: ", typeDataRequest.data.damage_relations);
 
         for (let i = 0; i < typeDataRequest.data.damage_relations.double_damage_from.length; i++)
         {
