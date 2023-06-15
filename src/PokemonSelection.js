@@ -22,11 +22,12 @@ export default function PokemonPlayer({ ActivatePokemonSelectionBtn, playerPokem
 
 
     const pokemonOptions = playerPokemonList.map(v => ({
+        key: v.url,
         label: v.name,
         value: v.name,
     }));
 
-    pokemonOptions.unshift({label: undefined, value: undefined})
+    pokemonOptions.unshift({key: 0, label: undefined, value: undefined})
 
 
     return (
@@ -36,7 +37,7 @@ export default function PokemonPlayer({ ActivatePokemonSelectionBtn, playerPokem
 
             <select value={value} onChange={handleChange}>
                 {pokemonOptions.map((option) => (
-                <option key={option.value} value={option.value}> {option.label} </option>
+                <option key={option.key} value={option.value}> {option.label} </option>
                 ))}
             </select>
 

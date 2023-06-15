@@ -9,14 +9,15 @@ export default function PokemonDisplay({ displayedPokemon })
 
 
 
-    console.log("displayed pkmn: ", displayedPokemon.pokemonName);
+    //console.log("displayed pkmn: ", displayedPokemon.pokemonName);
 
 
 
     return (
     <div>
+        <img src={displayedPokemon.sprite} width="100" height="100" /> <br />
         Pokemon:  {displayedPokemon.pokemonName} <br />
-        HP:  {displayedPokemon.currentHP} / {displayedPokemon.maximumHP}
+        HP:  {displayedPokemon.curHP} / {displayedPokemon.maxHP}
     </div>
     )
 }
