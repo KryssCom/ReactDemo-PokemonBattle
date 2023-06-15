@@ -15,9 +15,9 @@ export default function PokemonDisplay({ displayedPokemon })
 
     return (
     <div>
-        <img src={displayedPokemon.sprite} /> <br />
+        <img src={displayedPokemon.sprite} width="100" height="100" /> <br />
         Pokemon:  {displayedPokemon.pokemonName} <br />
-        HP:  {displayedPokemon.currentHP} / {displayedPokemon.maximumHP}
+        HP:  {displayedPokemon.curHP} / {displayedPokemon.maxHP}
     </div>
     )
 }

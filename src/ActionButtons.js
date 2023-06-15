@@ -1,13 +1,18 @@
 import React from 'react'
 
-export default function ActionBtns({ ActivateAttackBtn, ActivateMoveRefreshBtn, attackBtnText }) 
+export default function ActionBtns({ ActivateAttackBtn, ActivateMoveRefreshBtn, playersPokemon }) 
 {
+    //First, ensure that pokemon data has fully loaded
+    let loaded = false;
+    playersPokemon ? loaded=true : loaded=false
+    if (loaded === false) {return "Loading Moves...";}
+
   return (
     <div>
-          {<button onClick={() => ActivateAttackBtn(1)}> {attackBtnText[0].toUpperCase()} </button>} &nbsp; 
-          {<button onClick={() => ActivateAttackBtn(2)}> {attackBtnText[1].toUpperCase()} </button>} &nbsp; 
-          {<button onClick={() => ActivateAttackBtn(3)}> {attackBtnText[2].toUpperCase()} </button>} &nbsp; 
-          {<button onClick={() => ActivateAttackBtn(4)}> {attackBtnText[3].toUpperCase()} </button>} &nbsp; || &nbsp;
+          {<button onClick={() => ActivateAttackBtn(1)}> {playersPokemon.moves[0].moveName.toUpperCase()} </button>} &nbsp; 
+          {<button onClick={() => ActivateAttackBtn(2)}> {playersPokemon.moves[1].moveName.toUpperCase()} </button>} &nbsp; 
+          {<button onClick={() => ActivateAttackBtn(3)}> {playersPokemon.moves[2].moveName.toUpperCase()} </button>} &nbsp; 
+          {<button onClick={() => ActivateAttackBtn(4)}> {playersPokemon.moves[3].moveName.toUpperCase()} </button>} &nbsp; || &nbsp;
           {<button onClick={ActivateMoveRefreshBtn}> Refresh Moves! </button>}
     </div>
   )
