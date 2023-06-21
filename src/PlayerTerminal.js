@@ -5,7 +5,7 @@ export default function PlayerTerminal({ playerTerminalMsg })
     //console.log("player terminal msg rcvd: " + playerTerminalMsg);
 
     return (
-        <div>
+        <div class="terminal">
             {playerTerminalMsg}
         </div>
     )
