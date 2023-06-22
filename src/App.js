@@ -5,7 +5,7 @@ import PokemonSelection from './PokemonSelection'
 import ActionButtons from './ActionButtons';
 import PlayerTerminal from './PlayerTerminal';
 import './fonts/PokemonGb-RAeo.ttf';
-import './style.css';
+import './styles.css';
 
 
 
@@ -427,9 +427,7 @@ function App()
     {
         return (
         <>
-            <br />
-            Opponent:
-            <PokemonDisplay displayedPokemon={opponentPokemon} />
+            <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false}  />
             <br />
             <br />
             <PokemonSelection ActivatePokemonSelectionBtn={ActivatePokemonSelectionBtn} playerPokemonList={fullPokemonList} />
