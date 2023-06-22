@@ -252,8 +252,6 @@ function App()
 
 
 
-
-    //CC_NOTE: should this use a "ResolveAttack" function?
     async function ActivateAttackBtn(attackNumber) 
     {
         if ((currentTurn === "opponent") || (playerTurnInProgress.current === true)) return;
@@ -294,9 +292,6 @@ function App()
         let resistanceConfirmed = false;
 
         
-
-
-
         //Check for weakness and resistance, double or halve atk power
         if (defendingPokemon.weaknesses.includes(chosenAttackType))
         {
@@ -415,7 +410,7 @@ function App()
     async function PrintNewTerminalMsg(msg) 
     {
         setPlayerTerminalMsg(msg);
-        await new Promise(r => setTimeout(r, 1200));
+        await new Promise(r => setTimeout(r, 1800));
     }
 
 
@@ -446,14 +441,9 @@ function App()
     {
         return(
         <>
-            <PokemonDisplay displayedPokemon={opponentPokemon} />
+            <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false} />
             <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <PokemonDisplay displayedPokemon={playerPokemon} />
-            <br />
+            <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
             <br />
             <ActionButtons 
                     ActivateAttackBtn={ActivateAttackBtn}            //Pass the function for attacking
@@ -461,7 +451,6 @@ function App()
                     playersPokemon={playerPokemon}                   //Pass the player's pokemon, so its attacks can be displayed
                     />
             <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
-            <br />
             <br />
             {gameIsOver && <button onClick={RefreshPage}> Play Again! </button>}
         </>

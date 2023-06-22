@@ -2,6 +2,7 @@
     border-style: double;
     border-right-style: none;
     border-width: 12px;
+    border-radius: 10px 0px 0px 10px;
     height: 120px;
     padding: 10px;
     width: 40%;
@@ -15,6 +16,7 @@
 .actionbtns {
     border-style: double;
     border-width: 12px;
+    border-radius: 10px;
     height: 120px;
     padding: 10px;
     width: 40%;
@@ -23,9 +25,64 @@
     margin-left: 0px;
 }
 
-@font-face {
-    font-family: "PokemonGB";
-    src: local("PokemonGB"), 
-        url("./fonts/PokemonGb-RAeo.ttf") format("truetype");
-    font-weight: bold;
+
+
+
+
+
+
+.pokemonDisplay {
+    display: flex;
 }
+
+.pokemonDisplay-opponent {
+
+    justify-content: flex-end;
+}
+
+.pokemonDisplay-player {
+
+    justify-content: flex-start;
+}
+
+.pokemonImage {
+
+}
+
+.pokemonImage-opponent {
+
+}
+
+.pokemonImage-player {
+    float: left;
+    transform: scaleX(-1);
+}
+
+.pokemonDataDisplay {
+    font-size: large;
+    font-family: PokemonGB;
+    width: 25%;
+    margin: 120px 0px 0px 0px;
+}
+
+.pokemonDataDisplay-opponent {
+    float: left;
+}
+
+.pokemonDataDisplay-player {
+
+}
+
+
+
+
+
+
+
+
+    @font-face {
+        font-family: "PokemonGB";
+        src: local("PokemonGB"), 
+            url("./fonts/PokemonGb-RAeo.ttf") format("truetype");
+        font-weight: bold;
+    }
