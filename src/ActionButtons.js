@@ -8,13 +8,13 @@ export default function ActionBtns({ ActivateAttackBtn, ActivateMoveRefreshBtn, 
     if (loaded === false) {return "Loading Moves...";}
 
   return (
-    <div className="actionbtns">
-          {<button onClick={() => ActivateAttackBtn(1)}> {playersPokemon.moves[0].moveName.toUpperCase()} </button>} <br />
-          {<button onClick={() => ActivateAttackBtn(2)}> {playersPokemon.moves[1].moveName.toUpperCase()} </button>} <br />
-          {<button onClick={() => ActivateAttackBtn(3)}> {playersPokemon.moves[2].moveName.toUpperCase()} </button>} <br /> 
-          {<button onClick={() => ActivateAttackBtn(4)}> {playersPokemon.moves[3].moveName.toUpperCase()} </button>} <br />
+    <div className="actionBtnDisplay">
+          {<button className="attackBtn" onClick={() => ActivateAttackBtn(1)}> {playersPokemon.moves[0].moveName.toUpperCase()} </button>} <br />
+          {<button className="attackBtn" onClick={() => ActivateAttackBtn(2)}> {playersPokemon.moves[1].moveName.toUpperCase()} </button>} <br />
+          {<button className="attackBtn" onClick={() => ActivateAttackBtn(3)}> {playersPokemon.moves[2].moveName.toUpperCase()} </button>} <br /> 
+          {<button className="attackBtn" onClick={() => ActivateAttackBtn(4)}> {playersPokemon.moves[3].moveName.toUpperCase()} </button>} <br />
           <hr />
-          {<button onClick={ActivateMoveRefreshBtn}> Refresh Moves! </button>}
+          {<button className="refreshBtn" onClick={ActivateMoveRefreshBtn}> Refresh My Moves! </button>}
     </div>
   )
 }

@@ -443,12 +443,14 @@ function App()
             <br />
             <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
             <br />
+            <div>
+            <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
             <ActionButtons 
                     ActivateAttackBtn={ActivateAttackBtn}            //Pass the function for attacking
                     ActivateMoveRefreshBtn={ActivateMoveRefreshBtn}  //Pass the function for move-refresh
                     playersPokemon={playerPokemon}                   //Pass the player's pokemon, so its attacks can be displayed
                     />
-            <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
+            </div>
             <br />
             {gameIsOver && <button onClick={RefreshPage}> Play Again! </button>}
         </>
