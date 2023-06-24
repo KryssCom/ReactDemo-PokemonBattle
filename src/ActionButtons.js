@@ -5,7 +5,7 @@ export default function ActionBtns({ ActivateAttackBtn, ActivateMoveRefreshBtn, 
     //First, ensure that pokemon data has fully loaded
     let loaded = false;
     playersPokemon ? loaded=true : loaded=false
-    if (loaded === false) {return "Loading Moves...";}
+    if (loaded === false) {return  ""; }
 
   return (
     <div className="actionBtnDisplay">

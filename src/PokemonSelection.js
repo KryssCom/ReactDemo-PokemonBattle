@@ -23,7 +23,7 @@ export default function PokemonPlayer({ ActivatePokemonSelectionBtn, playerPokem
 
     const pokemonOptions = playerPokemonList.map(v => ({
         key: v.url,
-        label: v.name,
+        label: v.name.toUpperCase(),
         value: v.name,
     }));
 
@@ -31,24 +31,22 @@ export default function PokemonPlayer({ ActivatePokemonSelectionBtn, playerPokem
 
 
     return (
-        <div>
-            <label>
-            Select your Pokemon: <br />
+        <div className="pokemonSelector">
+            
+            Select your Pokemon: 
+            <br />
+            <br />
+            <br />
 
-            <select value={value} onChange={handleChange}>
+            <select className="pokemonSelectionDropdown" value={value} onChange={handleChange}>
                 {pokemonOptions.map((option) => (
                 <option key={option.key} value={option.value}> {option.label} </option>
                 ))}
-            </select>
+            </select> 
 
-            </label>
-            <br />
-            <br />
-            {value && <button onClick={() => ActivatePokemonSelectionBtn(value)}> I choose you, {value}! </button>}
+            {value && <button className="pokemonSelectionBtn" onClick={() => ActivatePokemonSelectionBtn(value)}> I choose you, {value.toUpperCase()}! </button>}
         </div>
     );
 }
-
-
 
 

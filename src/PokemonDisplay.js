@@ -5,7 +5,7 @@ export default function PokemonDisplay({ displayedPokemon, isPlayerPokemon })
     //First, ensure that pokemon data has fully loaded
     let loaded = false;
     displayedPokemon ? loaded=true : loaded=false
-    if (loaded === false) {return "Loading Pokemon...";}
+    if (loaded === false) {return <div className="pokemonPlaceholder"></div>}
 
     let hpPercentage = 100 * (displayedPokemon.curHP / displayedPokemon.maxHP);
 

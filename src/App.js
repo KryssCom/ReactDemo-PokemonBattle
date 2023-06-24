@@ -421,7 +421,7 @@ function App()
 
     if (loadingApiData) //LOADING SCREEN
     {
-        return "Loading..."
+        return "";
     }
     else if (playerPokemonSelected === false) //POKEMON SELECTION SCREEN
     {
@@ -452,7 +452,7 @@ function App()
                     />
             </div>
             <br />
-            {gameIsOver && <button onClick={RefreshPage}> Play Again! </button>}
+            {gameIsOver && <button className="gameOverBtn" onClick={RefreshPage}> Play Again ? </button>}
         </>
         );
     }
