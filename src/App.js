@@ -4,6 +4,8 @@ import PokemonDisplay from './PokemonDisplay'
 import PokemonSelection from './PokemonSelection'
 import ActionButtons from './ActionButtons';
 import PlayerTerminal from './PlayerTerminal';
+import './fonts/PokemonGb-RAeo.ttf';
+import './styles.css';
 
 
 
@@ -133,7 +135,7 @@ function App()
 
         async function OpponentTurn(callbackResolveAtk, callbackPrintTerminalMsg)
         {
-            console.log("OPPONENT NOW TAKING TURN; datetime: ", Date.now() );
+            //console.log("OPPONENT NOW TAKING TURN; datetime: ", Date.now() );
 
             //setPlayerTerminalMsg("It's your opponent's turn!");
             //await new Promise(r => setTimeout(r, 2000));
@@ -145,14 +147,14 @@ function App()
             let attackResult = await callbackResolveAtk(opponentPokemon, playerPokemon, attackNumber);
 
 
-            if (attackResult == "endgame")
+            if (attackResult === "endgame")
             {
                 setCurrentTurn("neutral");
                 callbackPrintTerminalMsg(playerPokemon.pokemonName.toUpperCase() + " fainted! You lose!");
                 setGameIsOver(true);
                 return;
             }
-            else if (attackResult == "continue")
+            else if (attackResult === "continue")
             {
                 callbackPrintTerminalMsg("It's your turn!");
                 opponentTurnInProgress.current = false;
@@ -164,7 +166,7 @@ function App()
 
 
 
-        if ((currentTurn == "opponent") && (opponentTurnInProgress.current == false))
+        if ((currentTurn === "opponent") && (opponentTurnInProgress.current === false))
         {
             opponentTurnInProgress.current = true;
             OpponentTurn(ResolveAttack, PrintNewTerminalMsg);
@@ -250,11 +252,9 @@ function App()
 
 
 
-
-    //CC_NOTE: should this use a "ResolveAttack" function?
     async function ActivateAttackBtn(attackNumber) 
     {
-        if ((currentTurn == "opponent") || (playerTurnInProgress.current == true)) return;
+        if ((currentTurn === "opponent") || (playerTurnInProgress.current === true)) return;
         playerTurnInProgress.current = true;
 
         //Look up the move, look up that move's power, subtract that power from opponent's remaining HP
@@ -262,14 +262,14 @@ function App()
         let attackResult = await ResolveAttack(playerPokemon, opponentPokemon, attackNumber);
 
 
-        if (attackResult == "endgame")
+        if (attackResult === "endgame")
         {
             setCurrentTurn("neutral");
             await PrintNewTerminalMsg(opponentPokemon.pokemonName.toUpperCase() + " fainted! You win!");
             setGameIsOver(true);
             return;
         }
-        else if (attackResult == "continue")
+        else if (attackResult === "continue")
         {
             playerTurnInProgress.current = false;
             setCurrentTurn("opponent");
@@ -284,20 +284,14 @@ function App()
 
 
 
-
-
-    //asdfasdfasdf
     async function ResolveAttack(attackingPokemon, defendingPokemon, attackSelectionNum) 
     {
-        let chosenAttackPower = attackingPokemon.moves[attackSelectionNum].movePower / 2;       //asdfasdfasdf ROUND UP
+        let chosenAttackPower = attackingPokemon.moves[attackSelectionNum].movePower / 2; 
         let chosenAttackType = attackingPokemon.moves[attackSelectionNum].moveType;
         let weaknessConfirmed = false;
         let resistanceConfirmed = false;
-        console.log("atk power: " + chosenAttackPower);
+
         
-
-
-
         //Check for weakness and resistance, double or halve atk power
         if (defendingPokemon.weaknesses.includes(chosenAttackType))
         {
@@ -311,8 +305,8 @@ function App()
         }
 
 
-
-
+        chosenAttackPower = Math.round(chosenAttackPower);
+        //console.log("atk power (modified): " + chosenAttackPower);
 
         await PrintNewTerminalMsg(attackingPokemon.pokemonName.toUpperCase() + " used " + attackingPokemon.moves[attackSelectionNum].moveName.toUpperCase() + "!");
 
@@ -327,9 +321,9 @@ function App()
             {await PrintNewTerminalMsg("It's not very effective...");}
 
 
-        if (currentTurn == "opponent")
+        if (currentTurn === "opponent")
             {setPlayerPokemon( {...playerPokemon, curHP: defendingPokemonRemainingHP});}
-        else if (currentTurn == "player")
+        else if (currentTurn === "player")
             {setOpponentPokemon( {...opponentPokemon, curHP: defendingPokemonRemainingHP});}
 
 
@@ -354,7 +348,7 @@ function App()
 
         for (let i = 0; i < fullPokemonList.length; i++)
         {
-            if (fullPokemonList[i].name == playerSelectedPokemon)
+            if (fullPokemonList[i].name === playerSelectedPokemon)
             {
                 selectedPokemon = fullPokemonList[i];
                 break;
@@ -373,7 +367,7 @@ function App()
 
     async function ActivateMoveRefreshBtn() 
     {
-        if ((currentTurn == "opponent") || (playerTurnInProgress.current == true)) return;
+        if ((currentTurn === "opponent") || (playerTurnInProgress.current === true)) return;
         playerTurnInProgress.current = true;
 
         await PrintNewTerminalMsg("Refreshing your Pokemon's attacks....");
@@ -416,7 +410,7 @@ function App()
     async function PrintNewTerminalMsg(msg) 
     {
         setPlayerTerminalMsg(msg);
-        await new Promise(r => setTimeout(r, 1200));
+        await new Promise(r => setTimeout(r, 1800));
     }
 
 
@@ -427,15 +421,13 @@ function App()
 
     if (loadingApiData) //LOADING SCREEN
     {
-        return "Loading..."
+        return "";
     }
     else if (playerPokemonSelected === false) //POKEMON SELECTION SCREEN
     {
         return (
         <>
-            <br />
-            Opponent:
-            <PokemonDisplay displayedPokemon={opponentPokemon} />
+            <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false}  />
             <br />
             <br />
             <PokemonSelection ActivatePokemonSelectionBtn={ActivatePokemonSelectionBtn} playerPokemonList={fullPokemonList} />
@@ -447,31 +439,20 @@ function App()
     {
         return(
         <>
+            <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false} />
             <br />
-            Opponent:
-            <PokemonDisplay displayedPokemon={opponentPokemon} />
+            <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
             <br />
-            <br />
-            <br />
-            <br />
-            You:
-            <PokemonDisplay displayedPokemon={playerPokemon} />
-            <br />
-            <br />
+            <div>
+            <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
             <ActionButtons 
                     ActivateAttackBtn={ActivateAttackBtn}            //Pass the function for attacking
                     ActivateMoveRefreshBtn={ActivateMoveRefreshBtn}  //Pass the function for move-refresh
                     playersPokemon={playerPokemon}                   //Pass the player's pokemon, so its attacks can be displayed
                     />
+            </div>
             <br />
-            <hr />
-            <hr />
-            <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
-            <br />
-            <br />
-            <hr />
-            <hr />
-            {gameIsOver && <button onClick={RefreshPage}> Play Again! </button>}
+            {gameIsOver && <button className="gameOverBtn" onClick={RefreshPage}> Play Again ? </button>}
         </>
         );
     }

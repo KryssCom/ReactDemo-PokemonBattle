@@ -7,7 +7,7 @@ This was initially based on a short React/API demo app from Web Dev Simplified.
 The notes below are currently unchanged from that starting point, and not written by me.
 
 
-
+https://github.com/PokeAPI/pokeapi-js-wrapper#caching-images
 
 ## Available Scripts
 
