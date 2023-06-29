@@ -90,7 +90,6 @@ function App()
         async function InitialPageLoad(callbackSinglePkmnRetrieval)
         {
             let batchOfIncomingPokemon = [];
-            let cancel;
             let newFullPokemonList = [];
             let nextPageToCall = currentPageUrl;
             let cachedData = localStorage.getItem('initialPokeApiData');
@@ -106,7 +105,7 @@ function App()
                 //First, use the PokeAPI to generate a list of objects containing a name and a URL for each of the original 151 Pokemon
                 while (newFullPokemonList.length < 151)
                 {
-                    const fullListRequest = await axios.get(nextPageToCall) //, { cancelToken: new axios.CancelToken(c => cancel = c) })
+                    const fullListRequest = await axios.get(nextPageToCall); // //Possible todo: cancel via abortController
                     batchOfIncomingPokemon = (fullListRequest.data.results);
                     nextPageToCall = fullListRequest.data.next;
 
@@ -135,7 +134,6 @@ function App()
             callbackSinglePkmnRetrieval(randomOpponentPokemon)
                 .then(result => {
                     setOpponentPokemon(result);
-                    //set
                 })
 
             return;
@@ -146,7 +144,7 @@ function App()
         InitialPageLoad(RetrieveDataForSinglePokemon);
         setLoadingApiData(false);
 
-        return; // () => cancel()
+        return;
     }, [])
 
 
@@ -196,7 +194,7 @@ function App()
             OpponentTurn(ResolveAttack, PrintNewTerminalMsg);
         }
 
-        return; // () => cancel()
+        return;
     }, [currentTurn])
 
 
@@ -207,7 +205,7 @@ function App()
 
     async function RetrieveDataForSinglePokemon(pokemonArg)
     {
-        const singlePokemonRequest = await axios.get(pokemonArg.url); //cancellation crap here
+        const singlePokemonRequest = await axios.get(pokemonArg.url); //Possible todo: cancel via abortController
         let dataFromSinglePokemon = (singlePokemonRequest.data);
         //console.log("Raw Pokemon Data: ", dataFromSinglePokemon);
 
@@ -220,7 +218,7 @@ function App()
         for (let i = 0; i < NumberOfMoves; i++)
         {
             const randomMoveUrlForPkmn = listOfPokemonMoveUrls[Math.floor(Math.random() * listOfPokemonMoveUrls.length)];
-            const moveRequest = await axios.get(randomMoveUrlForPkmn) //cancellation crap here
+            const moveRequest = await axios.get(randomMoveUrlForPkmn)  //Possible todo: cancel via abortController
             let dataFromThisRandomMove = (moveRequest.data);
             retrievedPokemonMoves[i].moveName = dataFromThisRandomMove.name;
             retrievedPokemonMoves[i].moveType = dataFromThisRandomMove.type.name;
@@ -230,7 +228,7 @@ function App()
 
         //Grabbing type data
         let typeDataUrl = dataFromSinglePokemon.types[0].type.url;
-        let typeDataRequest = await axios.get(typeDataUrl) //cancellation crap here
+        let typeDataRequest = await axios.get(typeDataUrl)  //Possible todo: cancel via abortController
         let retrievedWeaknesses = [];
         let retrievedResistances = [];
         //console.log("Raw Type Data: ", typeDataRequest.data.damage_relations);
@@ -404,7 +402,7 @@ function App()
         for (let i = 0; i < NumberOfMoves; i++)
         {
             const randomMoveUrlForPkmn = listOfPokemonMoveUrls[Math.floor(Math.random() * listOfPokemonMoveUrls.length)];
-            const moveRequest = await axios.get(randomMoveUrlForPkmn) //cancellation crap here
+            const moveRequest = await axios.get(randomMoveUrlForPkmn)  //Possible todo: cancel via abortController
             let dataFromThisRandomMove = (moveRequest.data);
             retrievedPokemonMoves[i].moveName = dataFromThisRandomMove.name;
             retrievedPokemonMoves[i].moveType = dataFromThisRandomMove.type.name;
