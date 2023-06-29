@@ -9,6 +9,7 @@ import './styles.css';
 
 
 
+
 function App() 
 {
 
@@ -19,6 +20,7 @@ function App()
     const [fullPokemonList, setFullPokemonList] = useState([]);
     const [playerTerminalMsg, setPlayerTerminalMsg] = useState("");
     const [playerPokemonSelected, setPlayerPokemonSelected] = useState(false);
+    const [mostRecentlyRetrievedListOfMoveUrls, setMostRecentlyRetrievedListOfMoveUrls] = useState([]);
 
 
     const [opponentPokemon, setOpponentPokemon] = useState();
@@ -89,29 +91,51 @@ function App()
         {
             let batchOfIncomingPokemon = [];
             let cancel;
+            let newFullPokemonList = [];
             let nextPageToCall = currentPageUrl;
+            let cachedData = localStorage.getItem('initialPokeApiData');
 
-            //First, use the PokeAPI to generate a list of objects containing a name and a URL for each of the original 151 Pokemon
-            while (fullPokemonList.length < 151)
+            if (cachedData) 
             {
-                const fullListRequest = await axios.get(nextPageToCall) //, { cancelToken: new axios.CancelToken(c => cancel = c) })
-                batchOfIncomingPokemon = (fullListRequest.data.results);
-                nextPageToCall = fullListRequest.data.next;
-                fullPokemonList.push(...batchOfIncomingPokemon);
-
-                if (fullPokemonList.length > 151)
+                console.log("Using cached Pokemon data");
+                newFullPokemonList = [...fullPokemonList, ...JSON.parse(cachedData)];
+                setFullPokemonList(newFullPokemonList);
+            } 
+            else 
+            {
+                //First, use the PokeAPI to generate a list of objects containing a name and a URL for each of the original 151 Pokemon
+                while (newFullPokemonList.length < 151)
                 {
-                    fullPokemonList.splice(151);
+                    const fullListRequest = await axios.get(nextPageToCall) //, { cancelToken: new axios.CancelToken(c => cancel = c) })
+                    batchOfIncomingPokemon = (fullListRequest.data.results);
+                    nextPageToCall = fullListRequest.data.next;
+
+                    newFullPokemonList = [...newFullPokemonList, ...batchOfIncomingPokemon];
+
+                    if (newFullPokemonList.length > 151)
+                    {
+                        newFullPokemonList.splice(151);
+                    }
+
                 }
+
+                setFullPokemonList(newFullPokemonList);
+                console.log("Saving new Pokemon data into cache");
+                localStorage.setItem('initialPokeApiData', JSON.stringify(newFullPokemonList));
+
+                //let cachedDataChecker = localStorage.getItem('initialPokeApiData');
+                //console.log("cache checker: ", cachedDataChecker);
+
             }
 
-            console.log("full pkmn list: ", fullPokemonList);
+            console.log("full pkmn list: \n", newFullPokemonList);
 
-            let randomOpponentPokemon = fullPokemonList[Math.floor(Math.random() * fullPokemonList.length)];
+            let randomOpponentPokemon = newFullPokemonList[Math.floor(Math.random() * newFullPokemonList.length)];
 
             callbackSinglePkmnRetrieval(randomOpponentPokemon)
                 .then(result => {
                     setOpponentPokemon(result);
+                    //set
                 })
 
             return;
@@ -185,10 +209,12 @@ function App()
     {
         const singlePokemonRequest = await axios.get(pokemonArg.url); //cancellation crap here
         let dataFromSinglePokemon = (singlePokemonRequest.data);
-        console.log("Raw Pokemon Data: ", dataFromSinglePokemon);
+        //console.log("Raw Pokemon Data: ", dataFromSinglePokemon);
 
         //Grabbing four random moves for this Pokemon
         let listOfPokemonMoveUrls = dataFromSinglePokemon.moves.map(m => m.move.url);
+        setMostRecentlyRetrievedListOfMoveUrls(listOfPokemonMoveUrls);
+
         let retrievedPokemonMoves = [{}, {}, {}, {}];
 
         for (let i = 0; i < NumberOfMoves; i++)
@@ -207,7 +233,7 @@ function App()
         let typeDataRequest = await axios.get(typeDataUrl) //cancellation crap here
         let retrievedWeaknesses = [];
         let retrievedResistances = [];
-        console.log("Raw Type Data: ", typeDataRequest.data.damage_relations);
+        //console.log("Raw Type Data: ", typeDataRequest.data.damage_relations);
 
         for (let i = 0; i < typeDataRequest.data.damage_relations.double_damage_from.length; i++)
         {
@@ -372,10 +398,7 @@ function App()
 
         await PrintNewTerminalMsg("Refreshing your Pokemon's attacks....");
 
-        const singlePokemonRequest = await axios.get(playerPokemon.pokemonUrl); //cancellation crap here
-        let dataFromSinglePokemon = (singlePokemonRequest.data);
-
-        let listOfPokemonMoveUrls = dataFromSinglePokemon.moves.map(m => m.move.url);
+        let listOfPokemonMoveUrls = mostRecentlyRetrievedListOfMoveUrls;
         let retrievedPokemonMoves = [{}, {}, {}, {}];
 
         for (let i = 0; i < NumberOfMoves; i++)
@@ -459,4 +482,7 @@ function App()
 }
 
 export default App;
+
+
+
 
