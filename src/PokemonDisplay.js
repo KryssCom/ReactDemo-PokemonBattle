@@ -15,7 +15,7 @@ export default function PokemonDisplay({ displayedPokemon, isPlayerPokemon })
         <div className="pokemonDisplay pokemonDisplay-opponent">
             <div className="pokemonDataDisplay pokemonDataDisplay-opponent">
                 {displayedPokemon.pokemonName.toUpperCase()} <br /><br />
-                HP:  {displayedPokemon.curHP} / {displayedPokemon.maxHP}    
+                HP:  {displayedPokemon.curHP} / {displayedPokemon.maxHP} <br />
                 <meter className="hpMeter" value={hpPercentage} min="0" max="100" optimum="100" high="50" low="25"> </meter>
             </div>
             <div className="pokemonImage pokemonImage-opponent">
@@ -33,7 +33,7 @@ export default function PokemonDisplay({ displayedPokemon, isPlayerPokemon })
             </div>
             <div className="pokemonDataDisplay pokemonDataDisplay-player">
                 {displayedPokemon.pokemonName.toUpperCase()} <br /><br />
-                HP:  {displayedPokemon.curHP} / {displayedPokemon.maxHP}   
+                HP:  {displayedPokemon.curHP} / {displayedPokemon.maxHP} <br />
                 <meter className="hpMeter" value={hpPercentage} min="0" max="100" optimum="100" high="50" low="25"> </meter>
             </div>
         </div>
