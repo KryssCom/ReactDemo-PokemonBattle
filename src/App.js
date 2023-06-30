@@ -131,7 +131,7 @@ function App()
             await callbackPrintTerminalMsg("It's your opponent's turn!");
 
             //Randomly select one of the opponent's four attacks, and resolve that attack
-            let attackNumber = Math.floor(Math.random() * 4);
+            let attackNumber = Math.floor(Math.random() * 4) + 1; //Random number from 1-4
             let attackResult = await callbackResolveAtk(opponentPokemon, playerPokemon, attackNumber);
 
             //Check for endgame state after opponent attack, otherwise continue with player's turn
