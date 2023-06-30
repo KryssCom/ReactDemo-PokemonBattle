@@ -1,4 +1,21 @@
-﻿.terminal {
+﻿@font-face {
+    font-family: "PokemonGB";
+    src: local("PokemonGB"), url("./fonts/PokemonGb-RAeo.ttf") format("truetype");
+    font-weight: bold;
+}
+
+/* Default to the classic Pokemon Game Boy font for everything */
+html * {
+    font-family: PokemonGB;
+}
+
+
+
+
+
+
+
+.terminal {
     border-style: double;
     border-right-style: none;
     border-width: 12px;
@@ -9,7 +26,6 @@
     margin: 30px 2px 30px 10%;
     float: left;
     font-size: large;
-    font-family: PokemonGB;
 }
 
 .actionBtnDisplay {
@@ -24,22 +40,16 @@
     margin-left: 0px;
 }
 
-
-
 .refreshBtn {
     background-color: skyblue;
     border: solid;
     border-color: black;
     border-radius: 5px;
     color: black;
-    font-family: PokemonGB;
     text-align: center;
     width: 100%;
     height: 25%;
     cursor: pointer;
-    /*transition: all 0.5s;*/
-    /*font-size: medium;*/
-    /*margin: 36px;*/
 }
 
 .refreshBtn:hover {
@@ -55,7 +65,6 @@
     border-color: black;
     border-radius: 5px;
     color: black;
-    font-family: PokemonGB;
     text-align: center;
     width: 50%;
     height: 75px;
@@ -67,22 +76,13 @@
     color: white;
 }
 
-
-
-
-
-
-
-
 .pokemonSelector {
-    font-family: PokemonGB;
     font-size: large;
     display: inline-block;
     margin: 50px 0px 0px 40px;
 }
 
 .pokemonSelectionDropdown {
-    font-family: PokemonGB;
     font-size: medium;
     height: 40px;
     width: 250px;
@@ -95,17 +95,8 @@
     border-color: dodgerblue;
 }
 
-
-
-
-
-
-
-
-
 .pokemonSelectionBtn {
     margin: 0px 10px 0px 10px;
-    font-family: PokemonGB;
     font-size: medium;
     height: 40px;
     background-color: skyblue;
@@ -119,22 +110,15 @@
     color: white;
 }
 
-
-
-
-
 .attackBtn {
     background-color: transparent;
     border: none;
     color: black;
-    font-family: PokemonGB;
     text-align: left;
     padding: 0px 0px 0px 15px;
     width: 220px;
     cursor: pointer;
     /*transition: all 0.5s;*/
-    /*font-size: medium;*/
-    /*margin: 36px;*/
 }
 
 .attackBtn {
@@ -149,7 +133,6 @@
     position: absolute;
     opacity: 0;
     left: -2px;
-    /*top: 14px;*/
     /*transition: 0.5s;*/
 }
 
@@ -162,11 +145,6 @@
     opacity: 1;
     /*right: 10px;*/
 }
-
-
-
-
-
 
 .hpMeter {
     width: 250px;
@@ -202,7 +180,6 @@
 
 .pokemonDataDisplay {
     font-size: large;
-    font-family: PokemonGB;
     width: 25%;
     margin: 120px 0px 0px 0px;
 }
@@ -219,15 +196,3 @@
     height: 250px;
 }
 
-
-
-
-
-
-
-
-@font-face {
-    font-family: "PokemonGB";
-    src: local("PokemonGB"), url("./fonts/PokemonGb-RAeo.ttf") format("truetype");
-    font-weight: bold;
-}

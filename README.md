@@ -1,12 +1,12 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
-
 ## CC_NOTES
-This was initially based on a short React/API demo app from Web Dev Simplified.
-The notes below are currently unchanged from that starting point, and not written by me.
+This project was initially based on a short React demo app from Web Dev Simplified.
+The notes below are currently unchanged from that starting point, and were not written by me.
 
 
+
+## vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+## vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 

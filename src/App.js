@@ -50,7 +50,7 @@ function App()
             this.maxHP = maxHP;
             this.curHP = curHP; 
             this.sprite = sprite;
-            this.moves = moves;       //Array of 4 moves, each move is an object
+            this.moves = moves;       //Array of 4 PokemonMove objects
         }
     }
  
@@ -186,6 +186,7 @@ function App()
             const moveRequest = await axios.get(randomMoveUrlForPkmn)  //Possible todo: cancel via abortController
             const dataFromThisRandomMove = (moveRequest.data);
 
+            //Possible todo: allow non-damaging moves to have their appropriate functionality (e.g. HP recovery) instead of simply forcing the minimum power to 10
             let newMove = new PokemonMove(
                 dataFromThisRandomMove.name,
                 dataFromThisRandomMove.type.name,
@@ -400,7 +401,7 @@ function App()
 
 
 
-
+    //Simple refresh to restart game
     function RefreshPage() 
     {
         window.location.reload(false);
@@ -444,7 +445,7 @@ function App()
             <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
             <br />
             <div>
-            <PlayerTerminal playerTerminalMsg={playerTerminalMsg} />
+            <PlayerTerminal playerTerminalMsg={playerTerminalMsg} /> 
             <ActionButtons 
                     ActivateAttackBtn={ActivateAttackBtn}            //Pass the function for attacking
                     ActivateMoveRefreshBtn={ActivateMoveRefreshBtn}  //Pass the function for move-refresh
