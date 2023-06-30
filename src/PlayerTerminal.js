@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function PlayerTerminal({ playerTerminalMsg })
 {
-    //console.log("player terminal msg rcvd: " + playerTerminalMsg);
+    //Simply display the game terminal
 
     return (
         <div className="terminal">

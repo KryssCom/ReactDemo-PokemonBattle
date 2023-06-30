@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ActionBtns({ ActivateAttackBtn, ActivateMoveRefreshBtn, playersPokemon }) 
 {
-    //First, ensure that pokemon data has fully loaded
+    //Ensure that Pokemon data has fully loaded before displaying
     let loaded = false;
     playersPokemon ? loaded=true : loaded=false
     if (loaded === false) {return  ""; }

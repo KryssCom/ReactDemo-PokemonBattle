@@ -2,11 +2,12 @@ import React from 'react'
 
 export default function PokemonDisplay({ displayedPokemon, isPlayerPokemon })
 {
-    //First, ensure that pokemon data has fully loaded
+    //Ensure that Pokemon data has fully loaded before displaying
     let loaded = false;
     displayedPokemon ? loaded=true : loaded=false
-    if (loaded === false) {return <div className="pokemonPlaceholder"></div>}
+    if (loaded === false) {return <div className="pokemonPlaceholder"></div>}       //asdfasdfasdf
 
+    //The HP meter is a simple 0-100 percentage of the Pokemon's remaining HP
     let hpPercentage = 100 * (displayedPokemon.curHP / displayedPokemon.maxHP);
 
     if (isPlayerPokemon === false)
@@ -24,7 +25,7 @@ export default function PokemonDisplay({ displayedPokemon, isPlayerPokemon })
         </div>
         )
     }
-    else
+    else //displaying opponent's Pokemon
     {
         return (
         <div className="pokemonDisplay pokemonDisplay-player">
