@@ -445,6 +445,7 @@ function App()
     {
         return(
         <>
+            TEMP TEST 1
             <div className="mainDisplay">
             <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false} />
             <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
