@@ -436,10 +436,7 @@ function App()
         <>
             <div className="mainDisplay">
             <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false}  />
-            <br />
-            <br />
             <PokemonSelection ActivatePokemonSelectionBtn={ActivatePokemonSelectionBtn} playerPokemonList={fullPokemonList} />
-            <br />
             </div>
         </>
         );
@@ -450,9 +447,7 @@ function App()
         <>
             <div className="mainDisplay">
             <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false} />
-            <br />
             <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
-            <br />
             <div className="terminalAndBtns">
             <PlayerTerminal playerTerminalMsg={playerTerminalMsg} /> 
             <ActionButtons 
@@ -461,7 +456,6 @@ function App()
                     playersPokemon={playerPokemon}                   //Pass the player's pokemon, so its attacks can be displayed
                     />
             </div>
-            <br />
             {gameIsOver && <button className="gameOverBtn" onClick={RefreshPage}> Play Again ? </button>}
             </div>
         </>
