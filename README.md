@@ -1,6 +1,9 @@
 ## CC_NOTES
-This project was initially based on a short React demo app from Web Dev Simplified.
-The notes below are currently unchanged from that starting point, and were not written by me.
+This project is intended primarily as a simple tech demo.
+The entire game is soley based on React and RESTful API calls; there is no backend or saved data.
+
+The project was initially based on a short React demo app from Web Dev Simplified (https://www.youtube.com/c/webdevsimplified)
+The notes below this point are currently unchanged from that starting point, and were not written by me.
 
 
 
