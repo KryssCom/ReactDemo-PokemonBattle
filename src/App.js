@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef} from 'react';
 import axios from 'axios'
 import './styles.css';
 import './fonts/PokemonGb-RAeo.ttf';
-import PokemonDisplay from './PokemonDisplay'
-import PokemonSelection from './PokemonSelection'
-import ActionButtons from './ActionButtons';
-import PlayerTerminal from './PlayerTerminal';
+import PokemonDisplay from './components/PokemonDisplay'
+import PokemonSelection from './components/PokemonSelection'
+import ActionButtons from './components/ActionButtons';
+import PlayerTerminal from './components/PlayerTerminal';
 
 
 function App() 
