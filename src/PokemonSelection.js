@@ -5,28 +5,27 @@ export default function PokemonPlayer({ ActivatePokemonSelectionBtn, playerPokem
 {
     const [value, setValue] = React.useState();
 
-    //First, ensure that pokemon data has fully loaded
+    //Ensure that Pokemon data has fully loaded before displaying
     let loaded = false;
     playerPokemonList ? loaded=true : loaded=false
     if (loaded === false) {return "Loading Pokemon...";}
 
 
-    //console.log("playerPokemonList: ", playerPokemonList);
-
-
+    //Ensure the value of the Pokemon dropdown is updated according to player selection
     function handleChange(event)
     {
         setValue(event.target.value);
     };
 
 
-
-    const pokemonOptions = playerPokemonList.map(v => ({
+    //Generate a list of Pokemon usable for the selection dropdown
+    let pokemonOptions = playerPokemonList.map(v => ({
         key: v.url,
         label: v.name.toUpperCase(),
         value: v.name,
     }));
 
+    //Create an undefined "blank" in the first index of the dropdown, so that nothing is selected by default
     pokemonOptions.unshift({key: 0, label: undefined, value: undefined})
 
 
