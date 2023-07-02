@@ -116,6 +116,9 @@ function App()
         setLoadingApiData(false);
 
         return;
+
+    //The warnings about dependencies are not relevant in this instance
+    //eslint-disable-next-line react-hooks/exhaustive-deps     
     }, [])
 
 
@@ -159,6 +162,9 @@ function App()
         }
 
         return;
+
+    //The warnings about dependencies are not relevant in this instance
+    //eslint-disable-next-line react-hooks/exhaustive-deps     
     }, [currentTurn])
 
 
@@ -416,9 +422,9 @@ function App()
     }
 
 
-    //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     //Primary JSX here
-    //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
     if (loadingApiData) //LOADING SCREEN
     {
@@ -428,11 +434,13 @@ function App()
     {
         return (
         <>
+            <div className="mainDisplay">
             <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false}  />
             <br />
             <br />
             <PokemonSelection ActivatePokemonSelectionBtn={ActivatePokemonSelectionBtn} playerPokemonList={fullPokemonList} />
             <br />
+            </div>
         </>
         );
     }
@@ -440,11 +448,12 @@ function App()
     {
         return(
         <>
+            <div className="mainDisplay">
             <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false} />
             <br />
             <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
             <br />
-            <div>
+            <div className="terminalAndBtns">
             <PlayerTerminal playerTerminalMsg={playerTerminalMsg} /> 
             <ActionButtons 
                     ActivateAttackBtn={ActivateAttackBtn}            //Pass the function for attacking
@@ -454,6 +463,7 @@ function App()
             </div>
             <br />
             {gameIsOver && <button className="gameOverBtn" onClick={RefreshPage}> Play Again ? </button>}
+            </div>
         </>
         );
     }

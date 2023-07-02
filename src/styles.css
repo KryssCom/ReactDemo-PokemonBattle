@@ -12,32 +12,45 @@ html * {
 
 
 
+.mainDisplay {
+    width: 700px;
+    margin: auto;
+}
 
 
+.terminalAndBtns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin: 3% 0 3% 0;
+}
 
 .terminal {
     border-style: double;
     border-right-style: none;
     border-width: 12px;
     border-radius: 10px 0px 0px 10px;
-    height: 120px;
-    padding: 10px;
-    width: 35%;
-    margin: 30px 2px 30px 10%;
-    float: left;
+    height: 125px;
+    padding: 1.5%;
+    width: 50%;
     font-size: large;
+    line-height: 1.5;
 }
 
 .actionBtnDisplay {
     border-style: double;
     border-width: 12px;
     border-radius: 10px;
-    height: 120px;
-    padding: 10px;
-    width: 35%;
-    float: left;
-    margin: 30px 10% 30px 2px;
-    margin-left: 0px;
+    height: 125px;
+    padding: 1.5%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: flex-start;
 }
 
 .refreshBtn {
@@ -50,6 +63,7 @@ html * {
     width: 100%;
     height: 25%;
     cursor: pointer;
+    margin: 5% 0 0 0;
 }
 
 .refreshBtn:hover {
@@ -58,17 +72,20 @@ html * {
 }
 
 .gameOverBtn {
-    margin: 0px 25% 0px 25%;
-
+    margin: auto;
     background-color: skyblue;
     border: solid;
     border-color: black;
     border-radius: 5px;
     color: black;
     text-align: center;
-    width: 50%;
+    width: 75%;
     height: 75px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
 
 .gameOverBtn:hover {
@@ -76,10 +93,17 @@ html * {
     color: white;
 }
 
+
+
+
+
+
+
+
 .pokemonSelector {
     font-size: large;
     display: inline-block;
-    margin: 50px 0px 0px 40px;
+    margin: 15% 0 15% 0;
 }
 
 .pokemonSelectionDropdown {
@@ -110,29 +134,33 @@ html * {
     color: white;
 }
 
+
+
+
+
+
+
+
 .attackBtn {
     background-color: transparent;
     border: none;
     color: black;
     text-align: left;
-    padding: 0px 0px 0px 15px;
+    padding: 1% 0 0 5%;
     width: 220px;
     cursor: pointer;
-    /*transition: all 0.5s;*/
-}
+    /* transition: all 0.5s; */
 
-.attackBtn {
-    cursor: pointer;
     display: inline-block;
     position: relative;
-    /*transition: 0.5s;*/
+
 }
 
 .attackBtn:before {
     content: ' ► ';
     position: absolute;
     opacity: 0;
-    left: -2px;
+    left: -1%;
     /*transition: 0.5s;*/
 }
 
@@ -151,18 +179,29 @@ html * {
     height: 30px;
 }
 
+
+
+
+
+
+
+
+
+
+
 .pokemonDisplay {
     display: flex;
+    flex-direction: row;
 }
 
 .pokemonDisplay-opponent {
-
     justify-content: flex-end;
+    margin: 0 -10% 0 0;
 }
 
 .pokemonDisplay-player {
-
     justify-content: flex-start;
+    margin: 0 0 0 -10%;
 }
 
 .pokemonImage {
@@ -174,21 +213,23 @@ html * {
 }
 
 .pokemonImage-player {
-    float: left;
+    /*float: left;*/
     transform: scaleX(-1);
 }
 
 .pokemonDataDisplay {
     font-size: large;
-    width: 25%;
-    margin: 120px 0px 0px 0px;
+    width: 255px;
+    height: 130px;
+    margin: 125px 0 0 0;
 }
 
 .pokemonDataDisplay-opponent {
-    float: left;
+    /*float: left;*/
 }
 
 .pokemonDataDisplay-player {
+    /*padding-left: 30px*/;
 
 }
 
