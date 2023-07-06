@@ -153,7 +153,6 @@ html * {
 
     display: inline-block;
     position: relative;
-
 }
 
 .attackBtn:before {
@@ -165,13 +164,11 @@ html * {
 }
 
 .attackBtn:hover {
-    /*padding-right: 24px;*/
     padding-left: 20px;
 }
 
 .attackBtn:hover:before {
     opacity: 1;
-    /*right: 10px;*/
 }
 
 .hpMeter {
@@ -213,7 +210,6 @@ html * {
 }
 
 .pokemonImage-player {
-    /*float: left;*/
     transform: scaleX(-1);
 }
 
@@ -225,11 +221,10 @@ html * {
 }
 
 .pokemonDataDisplay-opponent {
-    /*float: left;*/
+
 }
 
 .pokemonDataDisplay-player {
-    /*padding-left: 30px*/;
 
 }
 

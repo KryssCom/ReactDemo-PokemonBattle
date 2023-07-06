@@ -328,7 +328,7 @@ function App()
             setPlayerPokemonAnimation("receivingDmg");
             setPlayerPokemon( {...playerPokemon, curHP: defendingPokemonRemainingHP});
             await new Promise(r => setTimeout(r, 1800));
-            //setPlayerPokemonAnimation("neutral");
+            setPlayerPokemonAnimation("neutral");
         }
         else if (currentTurn === "player")
         {
@@ -337,7 +337,7 @@ function App()
             setOpponentPokemonAnimation("receivingDmg");
             setOpponentPokemon( {...opponentPokemon, curHP: defendingPokemonRemainingHP});
             await new Promise(r => setTimeout(r, 1800));
-            //setOpponentPokemonAnimation("neutral");
+            setOpponentPokemonAnimation("neutral");
         }
 
         //Classic.
