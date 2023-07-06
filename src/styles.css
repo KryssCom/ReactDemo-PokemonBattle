@@ -205,7 +205,7 @@ html * {
 }
 
 .pokemonImage {
-    animation: horizontal-shaking 0.35s infinite;
+
 }
 
 .pokemonImage-opponent {
@@ -246,16 +246,30 @@ html * {
 
 
 
-/* Possible todo: shaking animation upon receiving dmg 
 
-.pokemonImage {
-    animation: horizontal-shaking 0.35s infinite;
+
+
+/* Offensive & Defensive Animations */
+
+.pokemonDamagedAnimation {
+    animation: damage-shaking 0.35s 6;
 }
 
-@keyframes horizontal-shaking {
+.pokemonAttackAnimation {
+    animation: attack-step 0.75s 1;
+}
+
+@keyframes attack-step {
+    0% {transform: translateX(0)}
+    33% {transform: translateX(-20px)}
+    66% {transform: translateX(20px)}
+    100% {transform: translateX(0)}
+}
+
+@keyframes damage-shaking {
     0% {transform: translateX(0)}
     25% {transform: translateX(5px)}
     50% {transform: translateX(-5px)}
     75% {transform: translateX(5px)}
     100% {transform: translateX(0)}
-}*/
+}

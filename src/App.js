@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef} from 'react';
 import axios from 'axios'
 import './styles.css';
 import './fonts/PokemonGb-RAeo.ttf';
-import PokemonDisplay from './PokemonDisplay'
-import PokemonSelection from './PokemonSelection'
-import ActionButtons from './ActionButtons';
-import PlayerTerminal from './PlayerTerminal';
+import PokemonDisplay from './components/PokemonDisplay';
+import PokemonSelection from './components/PokemonSelection';
+import ActionButtons from './components/ActionButtons';
+import PlayerTerminal from './components/PlayerTerminal';
 
 
 function App() 
@@ -27,6 +27,10 @@ function App()
     const opponentTurnInProgress = useRef(false);
     const playerTurnInProgress = useRef(false);
 
+    const [playerPokemonAnimation, setPlayerPokemonAnimation] = useState("neutral");
+    const [opponentPokemonAnimation, setOpponentPokemonAnimation] = useState("neutral");
+
+
     class PokemonMove
     {
         constructor(name, type, power)
@@ -39,7 +43,7 @@ function App()
 
     class Pokemon
     {
-        constructor(name, url, typeOne, weaknesses, resistances, maxHP, curHP, sprite, moves)
+        constructor(name, url, typeOne, weaknesses, resistances, maxHP, curHP, sprite, moves, animation)
         {
             this.pokemonName = name; 
             this.pokemonUrl = url;
@@ -238,7 +242,7 @@ function App()
             dataFromSinglePokemon.base_experience,
             dataFromSinglePokemon.base_experience,
             dataFromSinglePokemon.sprites.front_default,
-            retrievedPokemonMoves
+            retrievedPokemonMoves,
         );
 
         console.log("Retrieved Pokemon: ", retrievedPokemon);
@@ -256,7 +260,7 @@ function App()
     async function ActivateAttackBtn(attackNumber) 
     {
         //Ensure only one click per turn
-        if ((currentTurn === "opponent") || (playerTurnInProgress.current === true)) return;  
+        if ((currentTurn !== "player") || (playerTurnInProgress.current === true)) return;  
 
         playerTurnInProgress.current = true;
 
@@ -316,17 +320,31 @@ function App()
 
         if (defendingPokemonRemainingHP < 0) {defendingPokemonRemainingHP = 0;}     //HP should never go negative
 
+        //Set the attacked Pokemon's current HP to the new value, save it in state, and handle all animations
+        if (currentTurn === "opponent")
+        {
+            setOpponentPokemonAnimation("attacking");
+            await new Promise(r => setTimeout(r, 1800));
+            setPlayerPokemonAnimation("receivingDmg");
+            setPlayerPokemon( {...playerPokemon, curHP: defendingPokemonRemainingHP});
+            await new Promise(r => setTimeout(r, 1800));
+            //setPlayerPokemonAnimation("neutral");
+        }
+        else if (currentTurn === "player")
+        {
+            setPlayerPokemonAnimation("attacking");
+            await new Promise(r => setTimeout(r, 1800));
+            setOpponentPokemonAnimation("receivingDmg");
+            setOpponentPokemon( {...opponentPokemon, curHP: defendingPokemonRemainingHP});
+            await new Promise(r => setTimeout(r, 1800));
+            //setOpponentPokemonAnimation("neutral");
+        }
+
         //Classic.
         if (weaknessConfirmed)
             {await PrintNewTerminalMsg("It's super effective!");}
         else if (resistanceConfirmed)
             {await PrintNewTerminalMsg("It's not very effective...");}
-
-        //Set the attacked Pokemon's current HP to the new value, save in state
-        if (currentTurn === "opponent")
-            {setPlayerPokemon( {...playerPokemon, curHP: defendingPokemonRemainingHP});}
-        else if (currentTurn === "player")
-            {setOpponentPokemon( {...opponentPokemon, curHP: defendingPokemonRemainingHP});}
 
 
         //If the attacked Pokemon has fainted, the game is over
@@ -369,7 +387,7 @@ function App()
     async function ActivateMoveRefreshBtn() 
     {
         //Disallow refresh if it is not the player's turn or if they have already made a selection
-        if ((currentTurn === "opponent") || (playerTurnInProgress.current === true)) return;
+        if ((currentTurn !== "opponent") || (playerTurnInProgress.current === true)) return;
 
         playerTurnInProgress.current = true;
 
@@ -446,8 +464,8 @@ function App()
         return(
         <>
             <div className="mainDisplay">
-            <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false} />
-            <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true} />
+            <PokemonDisplay displayedPokemon={opponentPokemon} isPlayerPokemon={false} pokemonAnimation={opponentPokemonAnimation}  />
+            <PokemonDisplay displayedPokemon={playerPokemon} isPlayerPokemon={true}  pokemonAnimation={playerPokemonAnimation}  />
             <div className="terminalAndBtns">
             <PlayerTerminal playerTerminalMsg={playerTerminalMsg} /> 
             <ActionButtons 
