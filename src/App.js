@@ -387,7 +387,7 @@ function App()
     async function ActivateMoveRefreshBtn() 
     {
         //Disallow refresh if it is not the player's turn or if they have already made a selection
-        if ((currentTurn !== "opponent") || (playerTurnInProgress.current === true)) return;
+        if ((currentTurn !== "player") || (playerTurnInProgress.current === true)) return;
 
         playerTurnInProgress.current = true;
 
