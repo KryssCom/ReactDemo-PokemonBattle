@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ReactDemo-PokemonBattle/static/css/main.0c8b3e80.css",
-    "main.js": "/ReactDemo-PokemonBattle/static/js/main.fe4f1ca5.js",
+    "main.js": "/ReactDemo-PokemonBattle/static/js/main.050e485c.js",
     "static/media/PokemonGb-RAeo.ttf": "/ReactDemo-PokemonBattle/static/media/PokemonGb-RAeo.6211ee48ea626f34681e.ttf",
     "index.html": "/ReactDemo-PokemonBattle/index.html",
     "main.0c8b3e80.css.map": "/ReactDemo-PokemonBattle/static/css/main.0c8b3e80.css.map",
-    "main.fe4f1ca5.js.map": "/ReactDemo-PokemonBattle/static/js/main.fe4f1ca5.js.map"
+    "main.050e485c.js.map": "/ReactDemo-PokemonBattle/static/js/main.050e485c.js.map"
   },
   "entrypoints": [
     "static/css/main.0c8b3e80.css",
-    "static/js/main.fe4f1ca5.js"
+    "static/js/main.050e485c.js"
   ]
 }
